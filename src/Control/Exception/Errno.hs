@@ -21,6 +21,30 @@ import Data.Typeable (Typeable)
 import System.IO.Error (IOError)
 import Text.Show (Show)
 
+-- | @Errno@ 4, the @Interupted system call@ exception.
+newtype CallInterupted a = CallInterupted a
+    deriving (Show, Typeable)
+
+type CallInteruptedError = CallInterupted IOError
+
+-- | @Errno@ 5, the @I/O error@ exception.
+newtype InputOutput a = InputOutput a
+    deriving (Show, Typeable)
+
+type InputOutputError = InputOutput IOError
+
+-- | @Errno@ 9, the @Bad file number@ exception.
+newtype BadFileDescriptor a = BadFileDescriptor a
+    deriving (Show, Typeable)
+
+type BadFileDescriptorError = BadFileDescriptor IOError
+--
+-- | @Errno@ 32, the @Broken pipe@ exception.
+newtype BrokenPipe a = BrokenPipe a
+    deriving (Show, Typeable)
+
+type BrokenPipeError = BrokenPipe IOError
+
 -- | @Errno@ 111, the @Connection refused@ exception.
 newtype ConnectionRefused a = ConnectionRefused a
     deriving (Show, Typeable)
@@ -34,5 +58,9 @@ newtype HostUnreachable a = HostUnreachable a
 type HostUnreachableError = HostUnreachable IOError
 
 -- | Exception instances
-instance Exception (ConnectionRefusedError)
-instance Exception (HostUnreachableError)
+instance Exception CallInteruptedError
+instance Exception InputOutputError
+instance Exception BadFileDescriptorError
+instance Exception BrokenPipeError
+instance Exception ConnectionRefusedError
+instance Exception HostUnreachableError
